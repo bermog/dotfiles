@@ -1,0 +1,3 @@
+! option = symbols
+  colemak_remap:caps = +colemak_remap(caps)
+! include %S/evdev

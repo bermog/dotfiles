@@ -1,0 +1,6 @@
+// Replace left backspace with Esc in colemak. Based on:
+// - https://unix.stackexchange.com/a/698044
+// - https://unix.stackexchange.com/a/411879
+xkb_symbols "caps" {
+    key <CAPS> { [    Escape,    Escape,       Escape,        Escape ] };
+};
