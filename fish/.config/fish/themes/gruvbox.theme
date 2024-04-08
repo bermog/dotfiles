@@ -5,7 +5,7 @@ fish_color_comment brblack
 fish_color_cwd blue
 fish_color_cwd_root red
 fish_color_end purple
-fish_color_error magenta
+fish_color_error brblack
 fish_color_escape brblue
 fish_color_hg_added green
 fish_color_hg_clean green

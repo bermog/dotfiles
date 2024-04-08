@@ -8,7 +8,7 @@ SETUVAR fish_color_comment:brblack
 SETUVAR fish_color_cwd:blue
 SETUVAR fish_color_cwd_root:red
 SETUVAR fish_color_end:purple
-SETUVAR fish_color_error:magenta
+SETUVAR fish_color_error:brblack
 SETUVAR fish_color_escape:brblue
 SETUVAR fish_color_hg_added:green
 SETUVAR fish_color_hg_clean:green
@@ -34,7 +34,7 @@ SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
-SETUVAR fish_color_valid_path:\x1d
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
 SETUVAR fish_key_bindings:fish_vi_key_bindings
 SETUVAR fish_pager_color_background:\x1d
 SETUVAR fish_pager_color_completion:normal
