@@ -55,3 +55,6 @@ vim.opt.redrawtime = 10000 -- Allow more time for loading syntax on large files
 
 -- Ask for confirmation when quitting without saving instead of throwing an error
 vim.opt.confirm = true
+
+-- Remove netrw's help banner
+vim.g.netrw_banner = 0
