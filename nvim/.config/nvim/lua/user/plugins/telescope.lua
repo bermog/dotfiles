@@ -3,9 +3,10 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
         { '<leader>pf', '<Cmd>Telescope find_files<CR>' },
+        { '<leader>gb', '<Cmd>Telescope git_branches<CR>' },
         { '<C-p>', '<Cmd>Telescope git_files<CR>' },
         {
-            '<leader>ps', function()
+            '<leader>pw', function()
                 require('telescope.builtin').grep_string({
                     search = vim.fn.input('Grep > ')
                 })
