@@ -2,11 +2,12 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
-        { '<leader>pf', '<Cmd>Telescope find_files<CR>' },
+        { '<leader>tf', '<Cmd>Telescope find_files<CR>' },
         { '<leader>gb', '<Cmd>Telescope git_branches<CR>' },
-        { '<C-p>', '<Cmd>Telescope git_files<CR>' },
+        { '<C-t>', '<Cmd>Telescope git_files<CR>' },
+        { '<leader>th', '<Cmd>Telescope help_tags<CR>' },
         {
-            '<leader>pw', function()
+            '<leader>tw', function()
                 require('telescope.builtin').grep_string({
                     search = vim.fn.input('Grep > ')
                 })
