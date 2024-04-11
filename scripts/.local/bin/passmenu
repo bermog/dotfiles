@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Based on https://git.zx2c4.com/password-store/tree/contrib/dmenu/passmenu
+
+shopt -s nullglob globstar
+
+# Fetch pass files
+prefix=${PASSWORD_STORE_DIR-~/.password-store}
+password_files=( "$prefix"/**/*.gpg )
+password_files=( "${password_files[@]#"$prefix"/}" )
+password_files=( "${password_files[@]%.gpg}" )
+
+# Display passwords in rofi, save the one selected
+password=$(printf '%s\n' "${password_files[@]}" | rofi -dmenu "$@")
+[[ -n $password ]] || exit
+
+# Copy password to clipboard, display feedback message in notification
+pass show -c "$password" | head -n1 | while read OUTPUT; do notify-send "$OUTPUT"; done

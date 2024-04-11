@@ -41,6 +41,9 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
     # Take screenshot and add it to clipboard
     bindsym $mod+Shift+p exec grim -g "$(slurp)" - | wl-copy --type image/png
 
+    # Access pass manager through launcher
+    bindsym $mod+Shift+s exec passmenu
+
     # Define colemak and qwerty keyboard variants
     input "type:keyboard" {
         xkb_layout us,us
