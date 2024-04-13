@@ -2,8 +2,8 @@
 
 ### Variables
 #
-# Use Alt as mod key.
-set $mod Mod1
+# Use Super as mod key.
+set $mod Mod4
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -44,6 +44,11 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
     # Access pass manager through launcher
     bindsym $mod+Shift+s exec passmenu
 
+    # Control volume
+    bindsym $mod+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym $mod+Period exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym $mod+Comma exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+
     # Define colemak and qwerty keyboard variants
     input "type:keyboard" {
         xkb_layout us,us
@@ -51,7 +56,7 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
         # Set custom symbols defined at $HOME/xkb, swap Caps Lock with Esc
         xkb_options colemak_remap:colemak_esc,caps:swapescape
     }
-    bindsym Mod4+Space input "type:keyboard" xkb_switch_layout next
+    bindsym Mod1+Space input "type:keyboard" xkb_switch_layout next
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
