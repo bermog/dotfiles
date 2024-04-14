@@ -107,6 +107,7 @@
         "format": "{}% "
     },
     "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon4/temp3_input",
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
