@@ -82,10 +82,18 @@ return {
                         require('lspconfig')[server_name].setup({})
                     end,
 
-                    -- https://github.com/vuejs/language-tools?tab=readme-ov-file#hybrid-mode-configuration-requires-vuelanguage-server-version-200
-                    require('lspconfig').tsserver.setup({
-                        filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-                    })
+                    lua_ls = function()
+                        -- Fixes warning for undefined global 'vim'
+                        local lua_opts = lsp_zero.nvim_lua_ls()
+                        require('lspconfig').lua_ls.setup(lua_opts)
+                    end,
+
+                    tsserver = function ()
+                        -- https://github.com/vuejs/language-tools?tab=readme-ov-file#hybrid-mode-configuration-requires-vuelanguage-server-version-200
+                        require('lspconfig').tsserver.setup({
+                            filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+                        })
+                    end
                 }
             })
         end
