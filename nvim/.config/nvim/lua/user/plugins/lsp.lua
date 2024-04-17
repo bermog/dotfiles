@@ -74,7 +74,7 @@ return {
             end)
 
             require('mason-lspconfig').setup({
-                ensure_installed = { 'intelephense', 'tsserver', 'volar', 'lua_ls'},
+                ensure_installed = { 'intelephense', 'tsserver', 'volar', 'lua_ls', 'tailwindcss'},
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
