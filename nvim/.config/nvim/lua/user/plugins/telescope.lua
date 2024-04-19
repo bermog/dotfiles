@@ -6,6 +6,9 @@ return {
         { '<leader>gb', '<Cmd>Telescope git_branches<CR>' },
         { '<C-t>', '<Cmd>Telescope git_files<CR>' },
         { '<leader>th', '<Cmd>Telescope help_tags<CR>' },
+        { '<leader>of', '<Cmd>ObsidianQuickSwitch<CR>' },
+        { '<leader>ow', '<Cmd>ObsidianSearch<CR>' },
+        { '<leader>ot', '<Cmd>ObsidianTags<CR>' },
         {
             '<leader>tw', function()
                 require('telescope.builtin').grep_string({

@@ -58,3 +58,6 @@ vim.opt.confirm = true
 
 -- Remove netrw's help banner
 vim.g.netrw_banner = 0
+
+-- Display UI options from the Obsidian plugin
+vim.opt.conceallevel = 1
