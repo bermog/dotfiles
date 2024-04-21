@@ -1,0 +1,32 @@
+extends html
+
+snippet pubf "public method"
+	public function ${1:name}(${2:args}): ${3:type}
+	{
+		${0:code}
+	}
+
+snippet prof "protected method"
+	protected function ${1:name}(${2:args}): ${3:type} 
+	{
+		${0:code}
+	}
+
+snippet prif "private method"
+	protected function ${1:name}(${2:args}): ${3:type} 
+	{
+		${0:code}
+	}
+
+snippet testt "test method (prefix)"
+	public function test_${1:name}()
+	{
+		${0:code}
+	}
+
+snippet testa "test method (annotation)"
+	/** @test */
+	public function ${1:name}()
+	{
+		${0:code}
+	}
