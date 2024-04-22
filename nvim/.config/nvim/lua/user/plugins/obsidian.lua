@@ -12,7 +12,8 @@ return {
                 path = "~/Notes/Monolith",
             },
         },
-        new_notes_location = 'VOID',
+        notes_subdir = 'VOID',
+        new_notes_location = 'notes_subdir',
         daily_notes = {
             folder = 'LOGS',
         },
