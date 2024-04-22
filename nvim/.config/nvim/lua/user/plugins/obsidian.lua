@@ -12,6 +12,10 @@ return {
                 path = "~/Notes/Monolith",
             },
         },
+        new_notes_location = 'VOID',
+        daily_notes = {
+            folder = 'LOGS',
+        },
         completion = {
             nvim_cmp = true,
             min_chars = 2,
@@ -40,6 +44,9 @@ return {
                 [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
                 ["x"] = { char = "", hl_group = "ObsidianDone" },
             },
+        },
+        attachments = {
+            img_folder = 'IMGS',
         },
     },
 }
