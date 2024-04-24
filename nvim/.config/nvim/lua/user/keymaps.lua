@@ -42,8 +42,8 @@ vim.keymap.set('v', 'Y', 'myY`y')
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
--- Paste replace visual selection without copying it
-vim.keymap.set('v', 'p', '"_dP')
+-- Paste without copying replaced text
+vim.keymap.set('x', '<leader>p', '"_dP')
 
 -- Open the current file in the default program (on Mac this should just be just `open`)
 vim.keymap.set('n', '<leader>x', ':!xdg-open %<CR><CR>')
