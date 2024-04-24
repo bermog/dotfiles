@@ -1,8 +1,8 @@
 configuration {
-    display-ssh:    "";
-    display-run:    "";
-    display-drun:   "";
-    display-window: "";
+    display-ssh:    " ";
+    display-run:    " ";
+    display-drun:   " ";
+    display-window: " ";
     display-combi:  "";
     show-icons:     false;
 }

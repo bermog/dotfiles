@@ -6,8 +6,8 @@
  */
 
 * {
-	gruv0: #282828;
-	gruv1: #32302f;
+	gruv0: #1d2021;
+	gruv1: #282828;
 	gruv2: #45403d;
 	gruv3: #5a524c;
 
@@ -17,7 +17,7 @@
 
 	gruv7: #a89984;
 	gruv8: #928374;
-	gruv9: #7c6f64;
+	gruv9: #d5c4a1;
 	gruv10: #504945;
 	red: #ea6962;
 
@@ -36,14 +36,14 @@
 
     transparent: rgba(46,52,64,0);
 
+    font: "Hack 11";
 }
 
 window {
-    location: center;
-    anchor:   center;
-    border-radius: 10px;
-    height: 500px;
-    width: 600px;
+    location: north;
+    anchor:   north;
+    y-offset: -24px;
+    width: 100%;
 
     background-color: @transparent;
     spacing: 0;
@@ -65,12 +65,10 @@ message {
 
 inputbar {
     color: @gruv6;
-    padding: 14px;
+    padding: 14px 14px 0px 14px;
     background-color: @gruv0;
     border-color: @gruv0;
-
     border: 1px;
-    border-radius: 10px 10px 0px 0px;
 }
 
 entry, prompt, case-indicator {
@@ -79,16 +77,16 @@ entry, prompt, case-indicator {
 }
 
 prompt {
-    margin: 0px 1em 0em 0em ;
+    margin: 0 10px 0 0 ;
 }
 
 listview {
+    fixed-height: false;
     padding: 8px;
-    border-radius: 0px 0px 10px 10px;
     border: 2px 2px 2px 2px;
     border-color: @gruv0;
     background-color: @gruv0;
-    dynamic: false;
+    lines: 10;
 }
 
 element {
