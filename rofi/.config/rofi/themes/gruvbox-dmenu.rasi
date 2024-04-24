@@ -1,0 +1,67 @@
+/**
+ * Gruvbox rofi theme
+ *
+ * Based on https://github.com/sainnhe/gruvbox-material
+ * and the dmenu theme at https://github.com/davatorium/rofi-themes
+ *
+ */
+
+* {
+    gruv-dark: #1d2021;
+    gruv-light: #d5c4a1;
+
+    foreground: @gruv-light;
+    background-color: @gruv-dark;
+    text-color: @gruv-light;
+
+    highlight: underline bold;
+
+    font: "Hack 11";
+}
+
+window {
+    location: north;
+    anchor:   north;
+    y-offset: -24px;
+    width: 100%;
+    padding: 3px;
+
+    children:  [mainbox];
+    orientation: horizontal;
+}
+
+mainbox {
+    orientation: horizontal;
+    children: [ prompt, entry, listview ];
+}
+
+entry {
+    expand: false;
+    color: @gruv-light;
+    padding: 0px 8px 0px 8px;
+    background-color: @gruv-dark;
+    border-color: @gruv-dark;
+    width: 10em;
+}
+
+listview {
+    layout: horizontal;
+    spacing: 8px;
+}
+
+element {
+    padding: 0px 2px;
+}
+element.selected.normal {
+    background-color: @gruv-light;
+    text-color: @gruv-dark;
+}
+
+element-text {
+    background-color: inherit;
+    highlight: @gruv-light;
+}
+element-text.selected.normal {
+    text-color: @gruv-dark;
+    highlight: @gruv-dark;
+}
