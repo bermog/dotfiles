@@ -5,6 +5,13 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
+    keys = {
+        { '<leader>of', '<Cmd>ObsidianQuickSwitch<CR>' },
+        { '<leader>ow', '<Cmd>ObsidianSearch<CR>' },
+        { '<leader>ot', '<Cmd>ObsidianTags<CR>' },
+        { '<leader>od', '<Cmd>ObsidianDailies<CR>' },
+        { '<leader>on', '<Cmd>ObsidianNew<CR>' },
+    },
     opts = {
         workspaces = {
             {
