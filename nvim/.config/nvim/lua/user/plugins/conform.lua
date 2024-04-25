@@ -15,19 +15,8 @@ return {
     },
     opts = {
         formatters_by_ft = {
-            php = { 'php-cs-fixer' },
+            php = { 'pint' },
             blade = { 'blade-formatter' },
-        },
-        formatters = {
-            ['php-cs-fixer'] = {
-                command = 'php-cs-fixer',
-                args = {
-                    'fix',
-                    '--rules=@PSR12',
-                    '$FILENAME',
-                },
-                stdin = false,
-            },
         },
         notify_on_error = true,
     },
