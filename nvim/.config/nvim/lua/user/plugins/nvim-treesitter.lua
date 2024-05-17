@@ -26,6 +26,7 @@ return {
                 'php', 'sql', 'javascript', 'html', 'css',
                 'vue', 'python', 'bash', 'markdown', 'markdown_inline',
                 'json', 'ini', 'xml', 'yaml', 'php_only',
+                'go',
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
