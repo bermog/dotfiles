@@ -58,6 +58,11 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
     }
     bindsym Mod1+Space input "type:keyboard" xkb_switch_layout next
 
+    # Map tablet pen input to first display
+    input "1386:827:Wacom_Intuos_S_2_Pen" {
+        map_to_output DP-1
+    }
+
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     floating_modifier $mod normal
