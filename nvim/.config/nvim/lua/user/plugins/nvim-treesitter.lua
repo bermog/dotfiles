@@ -48,6 +48,12 @@ return {
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
             },
+
+            -- Needed since treesitter highlight disables autoindent for PHP files
+            -- https://laracasts.com/discuss/channels/general-discussion/auto-indentation-not-working-on-php-files-neovim
+            indent = {
+                enable = true,
+            },
         }
     end
 }
