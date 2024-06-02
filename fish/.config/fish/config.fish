@@ -3,4 +3,5 @@ if status is-interactive
     bind -M insert \ce end-of-line
 
     starship init fish | source
+    zoxide init fish | source
 end
