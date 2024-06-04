@@ -1,9 +1,10 @@
 # Tools
-abbr -ag vi nvim
+abbr -ag v nvim
 abbr -ag cat bat
 
 # Filesystem
-abbr -ag ll 'ls -la'
+abbr -ag l 'eza -l --icons --git -a'
+abbr -ag ll 'eza --tree --level=2 --long --icons --git'
 abbr -ag tr 'tree -a'
 
 # Git
