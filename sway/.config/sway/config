@@ -37,12 +37,12 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
     bindsym $mod+o exec $menu
 
     # Take screenshot and save it
-    bindsym $mod+p exec grim -g "$(slurp)" $HOME/screenshots/$(date +%d%m%y-%H%M%S).png
+    bindsym $mod+s exec grim -g "$(slurp)" $HOME/screenshots/$(date +%d%m%y-%H%M%S).png
     # Take screenshot and add it to clipboard
-    bindsym $mod+Shift+p exec grim -g "$(slurp)" - | wl-copy --type image/png
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy --type image/png
 
     # Access pass manager through launcher
-    bindsym $mod+Shift+s exec passmenu
+    bindsym $mod+p exec passmenu
 
     # Control volume
     bindsym $mod+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
