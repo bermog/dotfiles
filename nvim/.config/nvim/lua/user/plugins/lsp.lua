@@ -37,7 +37,7 @@ return {
             end)
 
             require('mason-lspconfig').setup({
-                ensure_installed = { 'phpactor', 'ts_ls', 'volar', 'lua_ls', 'tailwindcss', 'gopls'},
+                ensure_installed = { 'phpactor', 'ts_ls', 'volar', 'lua_ls', 'tailwindcss', 'gopls', 'astro'},
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
