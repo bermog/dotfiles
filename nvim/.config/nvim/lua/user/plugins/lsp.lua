@@ -37,7 +37,7 @@ return {
             end)
 
             require('mason-lspconfig').setup({
-                ensure_installed = { 'phpactor', 'tsserver', 'volar', 'lua_ls', 'tailwindcss', 'gopls'},
+                ensure_installed = { 'phpactor', 'ts_ls', 'volar', 'lua_ls', 'tailwindcss', 'gopls'},
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
@@ -51,9 +51,9 @@ return {
                         require('lspconfig').lua_ls.setup(lua_opts)
                     end,
 
-                    tsserver = function ()
+                    ts_ls = function ()
                         -- https://github.com/vuejs/language-tools?tab=readme-ov-file#hybrid-mode-configuration-requires-vuelanguage-server-version-200
-                        require('lspconfig').tsserver.setup({
+                        require('lspconfig').ts_ls.setup({
                             filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
                         })
                     end
