@@ -48,6 +48,8 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
     bindsym $mod+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym $mod+Period exec pactl set-sink-volume @DEFAULT_SINK@ +5%
     bindsym $mod+Comma exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    # Toggle audio input
+    bindsym $mod+Shift+m exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
     # Define colemak and qwerty keyboard variants
     input "type:keyboard" {
