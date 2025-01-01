@@ -60,6 +60,11 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
     }
     bindsym Mod1+Space input "type:keyboard" xkb_switch_layout next
 
+    # Invert mouse scrolling
+    input "type:pointer" {
+        natural_scroll enabled
+    }
+
     # Map tablet pen input to first display
     input "1386:827:Wacom_Intuos_S_2_Pen" {
         map_to_output DP-1
