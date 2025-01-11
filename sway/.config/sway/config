@@ -22,6 +22,9 @@ set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 #
 # Default wallpaper
 output * bg ~/Pictures/wallpapers/gruv.jpg fill
+# Default display order
+output DP-1 resolution 1920x1080 position 0,0
+output DP-2 resolution 1920x1080 position 1920,0
 
 ### Key bindings
 #
@@ -100,6 +103,10 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
 #
 # Workspaces:
 #
+    # Bind default workspaces to displays
+    workspace 1 output DP-1
+    workspace 2 output DP-2
+
     # Switch to workspace
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
