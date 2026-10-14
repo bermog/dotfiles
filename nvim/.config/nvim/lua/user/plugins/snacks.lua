@@ -1,0 +1,23 @@
+-- Based on https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+return {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    opts = {
+        picker = {
+            enabled = true,
+            sources = {
+                -- Show hidden files, keep respecting .gitignore
+                files = { hidden = true },
+                grep = { hidden = true },
+            },
+        },
+    },
+    keys = {
+        { '<leader>tf', function() Snacks.picker.files() end, desc = 'Find files' },
+        { '<C-t>', function() Snacks.picker.git_files() end, desc = 'Git files' },
+        { '<leader>gb', function() Snacks.picker.git_branches() end, desc = 'Git branches' },
+        { '<leader>th', function() Snacks.picker.help() end, desc = 'Help tags' },
+        { '<leader>tw', function() Snacks.picker.grep() end, desc = 'Grep' },
+    },
+}

@@ -45,7 +45,9 @@ return {
             },
         },
         picker = {
-            name = "telescope.nvim",
+            -- TODO: switch to "snacks.picker" once
+            -- https://github.com/epwalsh/obsidian.nvim/pull/823 merges
+            name = "fzf-lua",
         },
         ui = {
             checkboxes = {
