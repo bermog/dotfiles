@@ -61,12 +61,13 @@ return {
                 end,
             })
 
-            -- Fixes warning for undefined global 'vim' (was lsp_zero.nvim_lua_ls())
+            -- Allow the vim/Snacks globals (set by Neovim and snacks.nvim at
+            -- runtime). Neovim ships LuaJIT, not stock Lua
             vim.lsp.config('lua_ls', {
                 settings = {
                     Lua = {
-                        runtime = { version = 'Lua 5.1' },
-                        diagnostics = { globals = { 'vim' } },
+                        runtime = { version = 'LuaJIT' },
+                        diagnostics = { globals = { 'vim', 'Snacks' } },
                         workspace = { checkThirdParty = false },
                         telemetry = { enable = false },
                     },

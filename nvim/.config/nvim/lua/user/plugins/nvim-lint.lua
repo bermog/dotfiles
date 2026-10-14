@@ -16,6 +16,17 @@ return {
             lua = { 'selene' },
         }
 
+        -- selene only reads its config from cwd (no parent-dir search in 0.32),
+        -- so point it at the dotfiles config explicitly regardless of where
+        -- nvim was opened. selene.toml + nvim.yml define the vim/Snacks globals.
+        lint.linters.selene.args = {
+            '--config',
+            vim.fn.stdpath('config') .. '/selene.toml',
+            '--display-style',
+            'json',
+            '-',
+        }
+
         -- Lint on save, and when opening a file (covers opening without writing)
         local group = vim.api.nvim_create_augroup('nvim-lint', { clear = true })
         vim.api.nvim_create_autocmd({ 'BufWritePost' }, {

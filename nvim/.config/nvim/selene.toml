@@ -1,0 +1,7 @@
+# Env globals (vim, Snacks) live in nvim.yml; API strictness is lua_ls's job
+# (via lazydev.nvim), selene only does Lua-level linting
+std = "nvim"
+
+[lints]
+# lazy.nvim specs mix array and keyed entries: { 'plugin/name', opts = {} }
+mixed_table = "allow"
