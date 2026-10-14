@@ -1,64 +1,88 @@
--- Based on https://lsp-zero.netlify.app/v3.x/guide/lazy-loading-with-lazy-nvim
+-- Native Neovim LSP setup, see :h lsp-config
 return {
     {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        lazy = true,
-        config = false,
-        init = function()
-            -- Disable automatic setup, we are doing it manually
-            vim.g.lsp_zero_extend_cmp = 0
-            vim.g.lsp_zero_extend_lspconfig = 0
-        end,
-    },
-    {
-        'williamboman/mason.nvim',
+        'mason-org/mason.nvim',
         lazy = false,
-        config = true,
+        opts = {},
     },
     {
-        'neovim/nvim-lspconfig',
-        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
-        event = {'BufReadPre', 'BufNewFile'},
+        'mason-org/mason-lspconfig.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'williamboman/mason-lspconfig.nvim'},
+            'mason-org/mason.nvim',
+            'neovim/nvim-lspconfig',
+            'hrsh7th/cmp-nvim-lsp',
         },
         config = function()
-            -- This is where all the LSP shenanigans will live
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
-            --- if you want to know more about lsp-zero and mason.nvim
-            --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                lsp_zero.default_keymaps({buffer = bufnr})
-            end)
-
-            require('mason-lspconfig').setup({
-                ensure_installed = { 'phpactor', 'ts_ls', 'volar', 'lua_ls', 'tailwindcss', 'gopls', 'astro'},
-                handlers = {
-                    -- this first function is the "default handler"
-                    -- it applies to every language server without a "custom handler"
-                    function(server_name)
-                        require('lspconfig')[server_name].setup({})
-                    end,
-
-                    lua_ls = function()
-                        -- Fixes warning for undefined global 'vim'
-                        local lua_opts = lsp_zero.nvim_lua_ls()
-                        require('lspconfig').lua_ls.setup(lua_opts)
-                    end,
-
-                    ts_ls = function ()
-                        -- https://github.com/vuejs/language-tools?tab=readme-ov-file#hybrid-mode-configuration-requires-vuelanguage-server-version-200
-                        require('lspconfig').ts_ls.setup({
-                            filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-                        })
-                    end
-                }
+            -- Completion capabilities for every server
+            vim.lsp.config('*', {
+                capabilities = require('cmp_nvim_lsp').default_capabilities(),
             })
-        end
-    }
+
+            -- Buffer keymaps on attach. Built-ins already provide K (hover),
+            -- gra (code action), grr (references), gri, grn, grt, <C-s>
+            vim.api.nvim_create_autocmd('LspAttach', {
+                callback = function(ev)
+                    local map = function(keys, fn, desc)
+                        vim.keymap.set('n', keys, fn, { buffer = ev.buf, desc = desc })
+                    end
+                    map('gd', vim.lsp.buf.definition, 'Goto definition')
+                    map('gD', vim.lsp.buf.declaration, 'Goto declaration')
+                    map('gr', vim.lsp.buf.references, 'References')
+                    map('gl', vim.diagnostic.open_float, 'Line diagnostics')
+                    map('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, 'Prev diagnostic')
+                    map(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, 'Next diagnostic')
+                end,
+            })
+
+            -- Fixes warning for undefined global 'vim' (was lsp_zero.nvim_lua_ls())
+            vim.lsp.config('lua_ls', {
+                settings = {
+                    Lua = {
+                        runtime = { version = 'Lua 5.1' },
+                        diagnostics = { globals = { 'vim' } },
+                        workspace = { checkThirdParty = false },
+                        telemetry = { enable = false },
+                    },
+                },
+            })
+
+            -- Vue hybrid mode: vtsls + @vue/typescript-plugin, vue_ls handles CSS/HTML
+            local vue_language_server_path = vim.fn.stdpath('data')
+                .. '/mason/packages/vue-language-server/node_modules/@vue/language-server'
+            vim.lsp.config('vtsls', {
+                filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+                settings = {
+                    vtsls = {
+                        tsserver = {
+                            globalPlugins = {
+                                {
+                                    name = '@vue/typescript-plugin',
+                                    location = vue_language_server_path,
+                                    languages = { 'vue' },
+                                    configNamespace = 'typescript',
+                                },
+                            },
+                        },
+                    },
+                },
+                -- Stand down in Angular (angularls covers TS there) and Deno workspaces
+                root_dir = function(bufnr, on_dir)
+                    if vim.fs.root(bufnr, { 'angular.json', 'nx.json', 'deno.json', 'deno.jsonc' }) then
+                        return
+                    end
+                    local root = vim.fs.root(bufnr, {
+                        'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml',
+                        'bun.lockb', 'bun.lock', '.git',
+                    })
+                    on_dir(root or vim.fn.getcwd())
+                end,
+            })
+
+            -- Installs servers and enables them (automatic_enable, v2 default)
+            require('mason-lspconfig').setup({
+                ensure_installed = { 'phpactor', 'vtsls', 'vue_ls', 'lua_ls', 'tailwindcss', 'gopls', 'astro', 'angularls' },
+            })
+        end,
+    },
 }

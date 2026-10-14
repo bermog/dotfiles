@@ -8,10 +8,6 @@ return {
         },
         config = function()
             -- Here is where you configure the autocompletion settings.
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_cmp()
-
-            -- And you can configure cmp even more, if you want to.
             local cmp = require('cmp')
             local cmp_select = { behavior = cmp.SelectBehavior.select }
 
@@ -20,7 +16,14 @@ return {
             require('luasnip.loaders.from_snipmate').lazy_load()
 
             cmp.setup({
-                formatting = lsp_zero.cmp_format({ details = true }),
+                formatting = {
+                    fields = { 'abbr', 'menu', 'kind' },
+                    format = function(entry, item)
+                        local labels = { nvim_lsp = '[LSP]', luasnip = '[Snip]' }
+                        item.menu = labels[entry.source.name]
+                        return item
+                    end,
+                },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-y>'] = cmp.mapping.confirm({ select = true }),
