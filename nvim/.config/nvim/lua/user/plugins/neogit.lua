@@ -1,14 +1,14 @@
 return {
-    "NeogitOrg/neogit",
+    'NeogitOrg/neogit',
     dependencies = {
-        "nvim-lua/plenary.nvim",
-        "sindrets/diffview.nvim",
+        'nvim-lua/plenary.nvim',
+        'sindrets/diffview.nvim',
     },
     keys = {
-        { '<leader>gs', '<Cmd>Neogit<CR>' },
-        { '<leader>gc', '<Cmd>Neogit commit<CR>' },
-        { '<leader>gp', '<Cmd>Neogit pull<CR>' },
-        { '<leader>gP', '<Cmd>Neogit push<CR>' },
+        { '<leader>gs', '<Cmd>Neogit<CR>', desc = 'Open Neogit' },
+        { '<leader>gc', '<Cmd>Neogit commit<CR>', desc = 'Neogit commit' },
+        { '<leader>gp', '<Cmd>Neogit pull<CR>', desc = 'Neogit pull' },
+        { '<leader>gP', '<Cmd>Neogit push<CR>', desc = 'Neogit push' },
     },
-    config = true
+    config = true,
 }

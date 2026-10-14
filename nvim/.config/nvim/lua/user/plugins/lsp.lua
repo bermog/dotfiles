@@ -6,17 +6,39 @@ return {
         opts = {},
     },
     {
+        -- mason 2.0 dropped `ensure_installed` from setup(); this plugin
+        -- auto-installs formatters (conform) and linters (nvim-lint) on start
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        lazy = false,
+        dependencies = { 'mason-org/mason.nvim' },
+        opts = {
+            ensure_installed = {
+                -- Formatters
+                'pint',
+                'blade-formatter',
+                'prettierd',
+                'stylua',
+                'goimports',
+                -- Linters
+                'phpstan',
+                'eslint_d',
+                'golangci-lint',
+                'selene',
+            },
+        },
+    },
+    {
         'mason-org/mason-lspconfig.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             'mason-org/mason.nvim',
             'neovim/nvim-lspconfig',
-            'hrsh7th/cmp-nvim-lsp',
+            'saghen/blink.cmp',
         },
         config = function()
             -- Completion capabilities for every server
             vim.lsp.config('*', {
-                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+                capabilities = require('blink.cmp').get_lsp_capabilities(),
             })
 
             -- Buffer keymaps on attach. Built-ins already provide K (hover),
@@ -30,8 +52,12 @@ return {
                     map('gD', vim.lsp.buf.declaration, 'Goto declaration')
                     map('gr', vim.lsp.buf.references, 'References')
                     map('gl', vim.diagnostic.open_float, 'Line diagnostics')
-                    map('[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, 'Prev diagnostic')
-                    map(']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, 'Next diagnostic')
+                    map('[d', function()
+                        vim.diagnostic.jump({ count = -1, float = true })
+                    end, 'Prev diagnostic')
+                    map(']d', function()
+                        vim.diagnostic.jump({ count = 1, float = true })
+                    end, 'Next diagnostic')
                 end,
             })
 
@@ -72,8 +98,12 @@ return {
                         return
                     end
                     local root = vim.fs.root(bufnr, {
-                        'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml',
-                        'bun.lockb', 'bun.lock', '.git',
+                        'package-lock.json',
+                        'yarn.lock',
+                        'pnpm-lock.yaml',
+                        'bun.lockb',
+                        'bun.lock',
+                        '.git',
                     })
                     on_dir(root or vim.fn.getcwd())
                 end,
@@ -81,7 +111,16 @@ return {
 
             -- Installs servers and enables them (automatic_enable, v2 default)
             require('mason-lspconfig').setup({
-                ensure_installed = { 'phpactor', 'vtsls', 'vue_ls', 'lua_ls', 'tailwindcss', 'gopls', 'astro', 'angularls' },
+                ensure_installed = {
+                    'phpactor',
+                    'vtsls',
+                    'vue_ls',
+                    'lua_ls',
+                    'tailwindcss',
+                    'gopls',
+                    'astro',
+                    'angularls',
+                },
             })
         end,
     },

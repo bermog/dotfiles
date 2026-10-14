@@ -3,7 +3,6 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
-vim.opt.smartindent = true
 
 -- Line numbers
 vim.opt.number = true
@@ -40,7 +39,7 @@ vim.opt.sidescrolloff = 8
 -- Undo file
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
+vim.opt.undodir = vim.fn.stdpath('state') .. '/undo'
 vim.opt.undofile = true
 
 -- Complete the longest common match, and allow tabbing the results to fully complete them

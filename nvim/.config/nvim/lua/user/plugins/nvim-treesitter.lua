@@ -1,59 +1,94 @@
+-- NOTE: nvim-treesitter was rewritten on the `main` branch; the old
+-- `master` branch API (nvim-treesitter.configs.setup) no longer exists.
+-- https://github.com/nvim-treesitter/nvim-treesitter/discussions/7901
 return {
     'nvim-treesitter/nvim-treesitter',
-    event = 'VeryLazy',
-    build = function()
-        require('nvim-treesitter.install').update({ with_sync = true })
-    end,
+    branch = 'main',
+    lazy = false, -- main branch does not support lazy-loading
+    build = ':TSUpdate',
     config = function()
-        -- Manual blade parser - Install with ':TSInstall blade'
+        -- Manual blade parser: registered here, installed with ':TSInstall blade'
         -- https://github.com/EmranMR/tree-sitter-blade/discussions/19
-        local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-        parser_config.blade = {
-            install_info = {
-                url = "https://github.com/EmranMR/tree-sitter-blade", -- local path or git repo
-                files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
-                -- optional entries:
-                branch = "main",            -- default branch in case of git repo if different from master
-                generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-                requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-            }
+        vim.api.nvim_create_autocmd('User', {
+            pattern = 'TSUpdate',
+            callback = function()
+                require('nvim-treesitter.parsers').blade = {
+                    install_info = {
+                        url = 'https://github.com/EmranMR/tree-sitter-blade',
+                        files = { 'src/parser.c' },
+                        branch = 'main',
+                    },
+                    maintainers = {},
+                }
+            end,
+        })
+
+        require('nvim-treesitter').setup({})
+
+        -- Install parsers (async no-op if already installed)
+        require('nvim-treesitter').install({
+            'c',
+            'lua',
+            'vim',
+            'vimdoc',
+            'luadoc',
+            'query',
+            'php',
+            'php_only',
+            'sql',
+            'javascript',
+            'typescript',
+            'html',
+            'css',
+            'vue',
+            'astro',
+            'python',
+            'bash',
+            'markdown',
+            'markdown_inline',
+            'json',
+            'ini',
+            'xml',
+            'yaml',
+            'go',
+            'blade',
+        })
+
+        -- Highlighting is no longer a plugin module on main; enable it
+        -- per-filetype with the runtime's vim.treesitter.start()
+        local highlight_filetypes = {
+            'c',
+            'lua',
+            'vim',
+            'vimdoc',
+            'php',
+            'sql',
+            'javascript',
+            'typescript',
+            'html',
+            'css',
+            'vue',
+            'astro',
+            'python',
+            'bash',
+            'markdown',
+            'json',
+            'ini',
+            'xml',
+            'yaml',
+            'go',
+            'blade',
         }
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = highlight_filetypes,
+            callback = function(ev)
+                vim.treesitter.start(ev.buf)
+            end,
+        })
 
-        require('nvim-treesitter.configs').setup {
-            -- A list of parser names, or "all" (the five listed parsers should always be installed)
-            ensure_installed = {
-                'c', 'lua', 'vim', 'vimdoc', 'query',
-                'php', 'sql', 'javascript', 'html', 'css',
-                'vue', 'python', 'bash', 'markdown', 'markdown_inline',
-                'json', 'ini', 'xml', 'yaml', 'php_only',
-                'go', 'typescript', 'astro'
-            },
-
-            -- Install parsers synchronously (only applied to `ensure_installed`)
-            sync_install = false,
-
-            -- Automatically install missing parsers when entering buffer
-            -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-            auto_install = false,
-
-            ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-            -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-            highlight = {
-                enable = true,
-
-                -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-                -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-                -- Using this option may slow down your editor, and you may see some duplicate highlights.
-                -- Instead of true it can also be a list of languages
-                additional_vim_regex_highlighting = false,
-            },
-
-            -- Needed since treesitter highlight disables autoindent for PHP files
-            -- https://laracasts.com/discuss/channels/general-discussion/auto-indentation-not-working-on-php-files-neovim
-            indent = {
-                enable = true,
-            },
-        }
-    end
+        -- Treesitter-based indentation is experimental on main and opt-in.
+        -- Kept off for now; runtime filetype indent (plus after/indent/php.vim
+        -- for PHP) covers us. To try it, add to an ftplugin:
+        --   vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
 }
