@@ -10,6 +10,17 @@ return {
                 -- Show hidden files, keep respecting .gitignore
                 files = { hidden = true },
                 grep = { hidden = true },
+                explorer = {
+                    hidden = true,
+                    win = {
+                        list = {
+                            wo = {
+                                number = true,
+                                relativenumber = true,
+                            },
+                        },
+                    },
+                },
             },
         },
         explorer = {
