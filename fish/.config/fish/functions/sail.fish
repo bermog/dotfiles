@@ -1,3 +1,3 @@
 function sail
-  sh vendor/bin/sail $argv
+    sh vendor/bin/sail $argv
 end
