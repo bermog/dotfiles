@@ -10,13 +10,13 @@ set $down j
 set $up k
 set $right l
 # Terminal emulator
-set $term foot
-# App launcher
-set $rofi_cmd rofi \
-        -terminal '$term'
-# Shows a combined list of the applications with desktop files and
-# executables from PATH.
-set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
+set $term ghostty
+# App launcher: combined list of applications with desktop files and executables from PATH
+set $menu rofi -terminal $term -show combi -combi-modes drun#run -modes combi
+# Gruvbox colors
+set $green #689d6a
+set $gray #a89984
+set $fg #ebdbb2
 
 ### Output configuration
 #
@@ -26,145 +26,139 @@ output * bg ~/Pictures/wallpapers/gruv.jpg fill
 output DP-1 resolution 1920x1080 position 0,0
 output DP-2 resolution 1920x1080 position 1920,0
 
+### Input configuration
+#
+# Qwerty and colemak keyboard variants
+input "type:keyboard" {
+    xkb_layout us,us,es
+    xkb_variant ,colemak
+}
+# Invert mouse scrolling
+input "type:pointer" {
+    natural_scroll enabled
+}
+# Map tablet pen input to first display
+input "1386:827:Wacom_Intuos_S_2_Pen" {
+    map_to_output DP-1
+}
+
+### Appearance
+#
+default_border pixel 1
+default_floating_border pixel 1
+# class                 border  backgr. text    indicator child_border
+client.focused          $green  $green  $fg    $gray     $green
+# Disable automatic moving of cursor to new focused workspace
+mouse_warping none
+# Prevent window focus from following the cursor
+focus_follows_mouse no
+
 ### Key bindings
 #
 # Basics:
 #
-    # Start a terminal
-    bindsym $mod+Return exec $term
+# Start a terminal
+bindsym $mod+Return exec $term
+# Kill focused window
+bindsym $mod+Shift+q kill
+# Start launcher
+bindsym $mod+o exec $menu
+# Switch keyboard layout
+bindsym Mod1+Space input "type:keyboard" xkb_switch_layout next
+# Take screenshot and save it
+bindsym $mod+s exec grim -g "$(slurp)" "$HOME/screenshots/$(date +%d%m%y-%H%M%S).png"
+# Take screenshot and add it to clipboard
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy --type image/png
+# Access pass manager through launcher
+bindsym $mod+p exec passmenu
+# Control volume
+bindsym $mod+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym $mod+Period exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym $mod+Comma exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+# Toggle audio input
+bindsym $mod+Shift+m exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-    # Kill focused window
-    bindsym $mod+Shift+q kill
-
-    # Start launcher
-    bindsym $mod+o exec $menu
-
-    # Take screenshot and save it
-    bindsym $mod+s exec grim -g "$(slurp)" $HOME/screenshots/$(date +%d%m%y-%H%M%S).png
-    # Take screenshot and add it to clipboard
-    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy --type image/png
-
-    # Access pass manager through launcher
-    bindsym $mod+p exec passmenu
-
-    # Control volume
-    bindsym $mod+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindsym $mod+Period exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym $mod+Comma exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-    # Toggle audio input
-    bindsym $mod+Shift+m exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-
-    # Define colemak and qwerty keyboard variants
-    input "type:keyboard" {
-        xkb_layout us,us
-        xkb_variant colemak,
-        # Set custom symbols defined at $HOME/xkb, swap Caps Lock with Esc
-        xkb_options colemak_remap:colemak_esc,caps:swapescape
-    }
-    bindsym Mod1+Space input "type:keyboard" xkb_switch_layout next
-
-    # Invert mouse scrolling
-    input "type:pointer" {
-        natural_scroll enabled
-    }
-
-    # Map tablet pen input to first display
-    input "1386:827:Wacom_Intuos_S_2_Pen" {
-        map_to_output DP-1
-    }
-
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    floating_modifier $mod normal
-
-    # Reload the configuration file
-    bindsym $mod+Shift+c reload
-
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-#
 # Moving around:
 #
-    # Move your focus around
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# Move focused workspace between monitors
+bindsym $mod+Ctrl+greater move workspace to output right
+bindsym $mod+Ctrl+less move workspace to output left
 
-    # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
-
-    # Move focused workspace between monitors
-    bindsym $mod+Ctrl+greater move workspace to output right
-    bindsym $mod+Ctrl+less move workspace to output left
-#
 # Workspaces:
 #
-    # Bind default workspaces to displays
-    workspace 1 output DP-1
-    workspace 2 output DP-2
+# Bind default workspaces to displays
+workspace 1 output DP-1
+workspace 2 output DP-2
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
 
-    # Switch to workspace
-    bindsym $mod+1 workspace number 1
-    bindsym $mod+2 workspace number 2
-    bindsym $mod+3 workspace number 3
-    bindsym $mod+4 workspace number 4
-    bindsym $mod+5 workspace number 5
-    bindsym $mod+6 workspace number 6
-    bindsym $mod+7 workspace number 7
-    bindsym $mod+8 workspace number 8
-    bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
-    # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace number 1
-    bindsym $mod+Shift+2 move container to workspace number 2
-    bindsym $mod+Shift+3 move container to workspace number 3
-    bindsym $mod+Shift+4 move container to workspace number 4
-    bindsym $mod+Shift+5 move container to workspace number 5
-    bindsym $mod+Shift+6 move container to workspace number 6
-    bindsym $mod+Shift+7 move container to workspace number 7
-    bindsym $mod+Shift+8 move container to workspace number 8
-    bindsym $mod+Shift+9 move container to workspace number 9
-    bindsym $mod+Shift+0 move container to workspace number 10
-#
 # Layout:
 #
-    # $mod+b or $mod+v, for horizontal and vertical splits
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+# $mod+b or $mod+v, for horizontal and vertical splits
+bindsym $mod+b splith
+bindsym $mod+v splitv
+# Switch the current container between different layout styles
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+# Move focus to the parent container
+bindsym $mod+a focus parent
 
-    # Switch the current container between different layout styles
-    bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
-
-    # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
-
-    # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
-
-    # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
-
-    # Move focus to the parent container
-    bindsym $mod+a focus parent
-#
 # Scratchpad:
 #
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+# Drop-down terminal: spawned on demand straight into the scratchpad.
+# The mark is set at creation (when the title is still "scratchterm"), so the
+# toggle keeps working after shell integration renames the window title.
+for_window [title="^scratchterm$"] move scratchpad, mark --replace scratchterm, scratchpad show, enable floating, resize set 100 ppt 50 ppt, move position center
+bindsym $mod+grave exec swaymsg '[con_mark="^scratchterm$"] scratchpad show' || swaymsg exec "$term --title=scratchterm"
 
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
-
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
-#
-# Resizing containers:
+### Resize mode
 #
 mode "resize" {
     # left will shrink the containers width
@@ -188,18 +182,14 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Window border and color
-default_border pixel 1
-default_floating_border pixel 1
-# class                 border  backgr. text    indicator child_border
-client.focused          #689d6a #689d6a #ebdbb2 #a89984
+### Bar
+#
+bar {
+    swaybar_command waybar
+}
 
-# Disable automatic moving of cursor to new focused workspace
-mouse_warping none
-
-# Prevent window focus from following the cursor
-focus_follows_mouse no
-
+### Includes
+#
 # Include configs from 3 locations:
 #  - /usr/share/sway/config.d
 #  - /etc/sway/config.d
