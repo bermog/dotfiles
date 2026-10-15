@@ -77,6 +77,11 @@ bindsym $mod+Period exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym $mod+Comma exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 # Toggle audio input
 bindsym $mod+Shift+m exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# Control notifications (dunst)
+bindsym ctrl+space exec dunstctl close
+bindsym ctrl+shift+space exec dunstctl close-all
+bindsym ctrl+grave exec dunstctl history-pop
+bindsym ctrl+shift+period exec dunstctl context
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)

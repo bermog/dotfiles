@@ -1,48 +1,69 @@
 [global]
-    font = "Hack 11"
-    allow_markup = yes
+    # Font & text
+    font = Hack 11
+    markup = full
     format = "<b>%s</b>\n%b"
-    sort = yes
-    indicate_hidden = yes
-    alignment = center
-    bounce_freq = 0
-    show_age_threshold = 60
     word_wrap = yes
     ignore_newline = no
-    geometry = "200x5-6+30"
-    transparency = 0
-    idle_threshold = 120
-    monitor = 0
-    follow = mouse
-    sticky_history = yes
     line_height = 0
-    separator_height = 2
+
+    # Placement & size (replaces old geometry)
+    width = (0, 300)
+    origin = top-right
+    offset = (6, 30)
+    follow = mouse
+    alignment = center
+    show_age_threshold = 60
+
+    # Behavior & history
+    sort = yes
+    indicate_hidden = yes
+    notification_limit = 5
+    idle_threshold = 120
+    sticky_history = yes
+    history_length = 20
+
+    # Spacing & frame
     padding = 8
     horizontal_padding = 8
-    separator_color = "#585858"
-    startup_notification = false
-    # https://github.com/knopwob/dunst/issues/26#issuecomment-36159395
-    #icon_position = left
-    #icon_folders = /usr/share/icons/elementary/actions/16/
-    frame_width = 0
+    gap_size = 8
+    separator_height = 2
+    frame_width = 3
+    frame_color = "#3c3836"
+    separator_color = frame
+    corner_radius = 0
 
-[shortcuts]
-    close = ctrl+space
-    close_all = ctrl+shift+space
-    history = ctrl+grave
-    context = ctrl+shift+period
+    # Progress bar (volume/brightness etc.)
+    progress_bar = yes
+    progress_bar_height = 10
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+    progress_bar_frame_width = 1
+    progress_bar_corner_radius = 0
+
+    # External integration
+    dmenu = /usr/bin/rofi -dmenu -p dunst
+    browser = /usr/bin/xdg-open
 
 [urgency_low]
-    background = "#282828"
-    foreground = "#ebdbb2"
-    timeout = 5
+    # Subtle: gray text, frame blends into bg, quick timeout
+    background = "#1d2021"
+    foreground = "#a89984"
+    highlight = "#689d6a"
+    frame_color = "#1d2021"
+    timeout = 4
 
 [urgency_normal]
-    background = "#282828"
-    foreground = "#ebdbb2"
-    timeout = 5
+    # Default look: gruvbox fg, mild frame
+    background = "#1d2021"
+    foreground = "#d5c4a1"
+    highlight = "#83a598"
+    timeout = 6
 
 [urgency_critical]
-    background = "#282828"
-    foreground = "#ebdbb2"
-    timeout = 5
+    # Standout: red fg + red frame, never auto-times out
+    background = "#1d2021"
+    foreground = "#fb4934"
+    highlight = "#fb4934"
+    frame_color = "#fb4934"
+    timeout = 0
