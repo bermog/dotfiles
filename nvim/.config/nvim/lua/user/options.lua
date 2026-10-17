@@ -50,7 +50,8 @@ vim.opt.undofile = true
 
 --vim.opt.signcolumn = 'yes:2'
 vim.opt.signcolumn = 'yes'
---vim.opt.showmode = false
+-- lualine shows the mode itself, so drop the cmdline duplicate
+vim.opt.showmode = false
 vim.opt.updatetime = 50
 vim.opt.redrawtime = 10000 -- Allow more time for loading syntax on large files
 
