@@ -39,7 +39,9 @@ vim.opt.sidescrolloff = 8
 -- Undo file
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = vim.fn.stdpath('state') .. '/undo'
+local undodir = vim.fn.stdpath('state') .. '/undo'
+vim.opt.undodir = undodir
+vim.fn.mkdir(undodir, 'p')
 vim.opt.undofile = true
 
 -- Complete the longest common match, and allow tabbing the results to fully complete them
@@ -54,6 +56,3 @@ vim.opt.redrawtime = 10000 -- Allow more time for loading syntax on large files
 
 -- Ask for confirmation when quitting without saving instead of throwing an error
 vim.opt.confirm = true
-
--- Remove netrw's help banner
-vim.g.netrw_banner = 0

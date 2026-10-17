@@ -24,6 +24,7 @@ return {
                 'eslint_d',
                 'golangci-lint',
                 'selene',
+                'ruff',
             },
         },
     },
@@ -61,14 +62,13 @@ return {
                 end,
             })
 
-            -- Allow the vim/Snacks globals (set by Neovim and snacks.nvim at
-            -- runtime). Neovim ships LuaJIT, not stock Lua
+            -- lazydev (ft=lua) already sets Lua.runtime.version = 'LuaJIT' and
+            -- Lua.workspace.checkThirdParty = false, and injects the Neovim
+            -- runtime library that defines `vim`. Only Snacks needs declaring.
             vim.lsp.config('lua_ls', {
                 settings = {
                     Lua = {
-                        runtime = { version = 'LuaJIT' },
-                        diagnostics = { globals = { 'vim', 'Snacks' } },
-                        workspace = { checkThirdParty = false },
+                        diagnostics = { globals = { 'Snacks' } },
                         telemetry = { enable = false },
                     },
                 },
@@ -121,6 +121,7 @@ return {
                     'gopls',
                     'astro',
                     'angularls',
+                    'pyright',
                 },
             })
         end,

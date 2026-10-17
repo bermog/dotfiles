@@ -29,7 +29,15 @@ return {
                 end,
             },
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                -- lazydev provides require()/module completion while editing the config
+                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+                providers = {
+                    lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100,
+                    },
+                },
                 compat = { 'vim-dadbod-completion' },
                 -- dadbod only makes sense in SQL-ish buffers
                 per_filetype = {

@@ -14,6 +14,7 @@ return {
             vue = { 'eslint_d' },
             go = { 'golangci_lint' },
             lua = { 'selene' },
+            python = { 'ruff' },
         }
 
         -- selene only reads its config from cwd (no parent-dir search in 0.32),
