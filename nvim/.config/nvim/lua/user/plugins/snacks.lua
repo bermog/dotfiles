@@ -36,6 +36,13 @@ return {
             desc = 'Find files',
         },
         {
+            '<leader>pv',
+            function()
+                Snacks.explorer()
+            end,
+            desc = 'Open file explorer',
+        },
+        {
             '<C-t>',
             function()
                 Snacks.picker.git_files()

@@ -54,7 +54,6 @@ return {
                     end
                     map('gd', vim.lsp.buf.definition, 'Goto definition')
                     map('gD', vim.lsp.buf.declaration, 'Goto declaration')
-                    map('gr', vim.lsp.buf.references, 'References')
                     map('gl', vim.diagnostic.open_float, 'Line diagnostics')
                     map('[d', function()
                         vim.diagnostic.jump({ count = -1, float = true })

@@ -25,8 +25,11 @@ return {
 
         require('nvim-treesitter').setup({})
 
-        -- Install parsers (async no-op if already installed)
-        require('nvim-treesitter').install({
+        -- Single source of truth: parsers to install (async no-op if already
+        -- installed). Highlighting is enabled for every one of them except the
+        -- auxiliary parsers in `no_highlight`, plus any filetype whose name
+        -- differs from the parser that provides it.
+        local parsers = {
             'c',
             'lua',
             'vim',
@@ -53,34 +56,22 @@ return {
             'yaml',
             'go',
             'blade',
-        })
+        }
+        require('nvim-treesitter').install(parsers)
 
         -- Highlighting is no longer a plugin module on main; enable it
         -- per-filetype with the runtime's vim.treesitter.start()
-        local highlight_filetypes = {
-            'c',
-            'lua',
-            'vim',
-            'vimdoc',
-            'php',
-            'sql',
-            'javascript',
-            'typescript',
-            'html',
-            'htmlangular',
-            'css',
-            'vue',
-            'astro',
-            'python',
-            'bash',
-            'markdown',
-            'json',
-            'ini',
-            'xml',
-            'yaml',
-            'go',
-            'blade',
+        local no_highlight = {
+            luadoc = true,
+            query = true,
+            php_only = true,
+            markdown_inline = true,
+            angular = true, -- highlighted via the `htmlangular` filetype below
         }
+        local highlight_filetypes = vim.tbl_filter(function(ft)
+            return not no_highlight[ft]
+        end, parsers)
+        vim.list_extend(highlight_filetypes, { 'htmlangular' })
         vim.api.nvim_create_autocmd('FileType', {
             pattern = highlight_filetypes,
             callback = function(ev)
