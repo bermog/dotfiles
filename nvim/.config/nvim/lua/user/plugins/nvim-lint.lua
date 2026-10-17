@@ -12,6 +12,8 @@ return {
             typescript = { 'eslint_d' },
             typescriptreact = { 'eslint_d' },
             vue = { 'eslint_d' },
+            html = { 'eslint_d' },
+            htmlangular = { 'eslint_d' },
             go = { 'golangci_lint' },
             lua = { 'selene' },
             python = { 'ruff' },
