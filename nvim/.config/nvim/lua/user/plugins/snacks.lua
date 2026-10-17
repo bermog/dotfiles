@@ -1,4 +1,13 @@
 -- Based on https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+
+-- Hide/show the tmux statusline (only when running inside tmux). Used by zen
+-- mode: disabled on open, restored on close.
+local function tmux_status(state)
+    if vim.env.TMUX then
+        vim.fn.system({ 'tmux', 'set-option', 'status', state })
+    end
+end
+
 return {
     'folke/snacks.nvim',
     priority = 1000,
@@ -31,7 +40,37 @@ return {
         statuscolumn = {
             enabled = true,
         },
+        -- Zen mode (replaces zen-mode.nvim + twilight.nvim). Dimming is off,
+        -- matching the previous twilight-disabled setup.
+        zen = {
+            toggles = { dim = false },
+            win = {
+                width = 120,
+                wo = {
+                    signcolumn = 'no',
+                    number = false,
+                    relativenumber = false,
+                },
+            },
+            on_open = function()
+                tmux_status('off')
+            end,
+            on_close = function()
+                tmux_status('on')
+            end,
+        },
     },
+    config = function(_, opts)
+        require('snacks').setup(opts)
+
+        -- Guard against quitting nvim while zen is open, which would otherwise
+        -- leave the tmux statusline hidden (zen-mode.nvim#111)
+        vim.api.nvim_create_autocmd('VimLeave', {
+            callback = function()
+                tmux_status('on')
+            end,
+        })
+    end,
     keys = {
         {
             '<leader>tf',
@@ -74,6 +113,13 @@ return {
                 Snacks.picker.grep()
             end,
             desc = 'Grep',
+        },
+        {
+            '<leader>z',
+            function()
+                Snacks.zen()
+            end,
+            desc = 'Toggle zen mode',
         },
     },
 }
