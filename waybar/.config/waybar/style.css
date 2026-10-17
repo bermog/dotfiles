@@ -1,14 +1,20 @@
 /* Based on /etc/xdg/waybar/style.css */
 
+@define-color bg #1d2021;
+@define-color fg #d5c4a1;
+@define-color orange #d65d0e;
+@define-color red #cc241d;
+@define-color yellow #d79921;
+
 * {
-    font-family: 'Hack', 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
+    font-family: 'Hack Nerd Font', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', 'Hack', monospace;
     font-size: 13px;
 }
 
 window#waybar {
-    background-color: #1d2021;
+    background-color: @bg;
     border-bottom: 0px;
-    color: #d5c4a1;
+    color: @fg;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -28,17 +34,18 @@ button {
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #d5c4a1;
+    box-shadow: inset 0 -3px @fg;
 }
 
 tooltip {
-    background: #1d2021;
+    background: @bg;
+    color: @fg;
 }
 
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
-    color: #d5c4a1;
+    color: @fg;
 }
 
 #workspaces button:hover {
@@ -46,36 +53,31 @@ tooltip {
 }
 
 #workspaces button.focused {
-    box-shadow: inset 0 -3px #d5c4a1;
+    box-shadow: inset 0 -3px @fg;
 }
 
 #workspaces button.urgent {
-    background-color: #d5c4a1;
-    color: #1d2021;
+    background-color: @red;
+    color: @bg;
 }
 
 #mode {
-    border-bottom: 3px solid #d5c4a1;
+    border-bottom: 3px solid @fg;
 }
 
 #clock,
-#battery,
 #cpu,
 #memory,
-#disk,
 #temperature,
-#backlight,
-#network,
 #pulseaudio,
-#wireplumber,
-#custom-media,
 #tray,
 #mode,
 #idle_inhibitor,
 #scratchpad,
-#mpd {
+#custom-layout,
+#custom-network {
     padding: 0 10px;
-    color: #d5c4a1;
+    color: @fg;
 }
 
 #window,
@@ -99,4 +101,32 @@ tooltip {
 
 #scratchpad.empty {
 	background-color: transparent;
+}
+
+/* State colors: make problems stand out from the flat gruvbox scheme */
+
+#temperature.critical {
+    color: @red;
+    font-weight: bold;
+}
+
+#cpu.warning {
+    color: @orange;
+}
+
+#pulseaudio.muted {
+    color: @red;
+}
+
+#custom-network.disconnected {
+    color: @red;
+    font-weight: bold;
+}
+
+#custom-network.wifi {
+    color: @fg;
+}
+
+#custom-network.ethernet {
+    color: @fg;
 }
