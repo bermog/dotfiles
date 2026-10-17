@@ -39,7 +39,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = 'Dow
 vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'Paste over selection, keep register' })
 
 -- Open the current file in the default program
-vim.keymap.set('n', '<leader>x', function()
+vim.keymap.set('n', '<leader>O', function()
     vim.ui.open(vim.fn.expand('%'))
 end, { desc = 'Open current file in default program' })
 

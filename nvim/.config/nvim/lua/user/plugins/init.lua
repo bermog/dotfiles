@@ -40,6 +40,7 @@ return {
                 { '<leader>g', group = 'Git' },
                 { '<leader>h', group = 'Hunks' },
                 { '<leader>t', group = 'Pickers' },
+                { '<leader>x', group = 'Trouble' },
             },
         },
     },

@@ -26,6 +26,11 @@ return {
         explorer = {
             enabled = true,
         },
+        -- Render line numbers, gitsigns hunks and diagnostic signs in a single
+        -- column: diagnostics/marks on the left, fold/git signs on the right.
+        statuscolumn = {
+            enabled = true,
+        },
     },
     keys = {
         {
