@@ -80,10 +80,11 @@
         "format": "{}% "
     },
     "temperature": {
-        // Stable symlink created by udev rule (see udev/rules.d/ below this
-        // config dir), since /sys/class/hwmon/hwmonN numbering is not stable
-        // across boots
-        "hwmon-path": "/run/hwmon-k10temp",
+        // k10temp is exposed at a stable PCI path; only the hwmonN suffix
+        // changes across boots, so let waybar resolve it. temp3_input is
+        // Tccd1 (actual die temperature), not the Tctl control value.
+        "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+        "input-filename": "temp3_input",
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]

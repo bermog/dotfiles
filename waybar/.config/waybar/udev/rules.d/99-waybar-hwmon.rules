@@ -1,9 +1,0 @@
-# Stable symlink for waybar's temperature module.
-# /sys/class/hwmon/hwmonN numbering is not stable across boots/kernel
-# updates, so point waybar at a fixed path instead.
-# k10temp has no /dev/hwmonN character device, so create the symlink
-# with RUN+= rather than SYMLINK+=.
-# Install: sudo ln -s ~/dotfiles/waybar/.config/waybar/udev/rules.d/99-waybar-hwmon.rules \
-#            /etc/udev/rules.d/ && sudo udevadm control --reload-rules \
-#          && sudo udevadm trigger --subsystem-match=hwmon
-ACTION=="add|change", SUBSYSTEM=="hwmon", ATTR{name}=="k10temp", RUN+="/bin/ln -sf /sys/class/hwmon/%k/temp1_input /run/hwmon-k10temp"
