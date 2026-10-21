@@ -52,6 +52,8 @@ client.focused          $green  $green  $fg    $gray     $green
 mouse_warping none
 # Prevent window focus from following the cursor
 focus_follows_mouse no
+# $mod + left-drag to move a floating window, $mod + right-drag to resize
+floating_modifier $mod
 
 ### Key bindings
 #
